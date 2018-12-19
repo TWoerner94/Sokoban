@@ -1,16 +1,16 @@
 package sokoban;
 
-public class GameTile {
+public class GameTile{
 	private int x, y;
-	private GameTiles tile;
-	
-	public enum GameTiles {
+	private TilesEnum tile;
+
+	public enum TilesEnum {
 		WALL("#"),
 		EMPTY(" "),
 		PLAYER("@");
 		
 		private final String tile;
-		GameTiles(String c) {
+		TilesEnum(String c) {
 			this.tile = c;
 		}
 		
@@ -18,6 +18,25 @@ public class GameTile {
 		public String toString() {
 			return this.tile;
 		}
+		
+		public static TilesEnum getTile(char c) {
+			switch(c) {
+			case '@': return PLAYER;
+			case ' ': return EMPTY;
+			case '#': return WALL;
+			default:  return EMPTY;
+			}
+		}
+	}
+	
+	public GameTile(int x, int y, TilesEnum tile) {
+		this.tile = tile;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public GameTile(TilesEnum tile) {
+		this.tile = tile;
 	}
 	
 	@Override
@@ -25,23 +44,9 @@ public class GameTile {
 		return this.tile.toString();
 	}
 	
-	public GameTiles getTile() {
+	public TilesEnum getTile() {
 		return this.tile;
 	}
 	
-	//Gibt das passende Tile zu einem String zurück
-	public static GameTiles getTileObject(String s) {
-		
-		if( s.equals(GameTiles.WALL.toString()) )
-			return GameTiles.WALL;
-		
-		return GameTiles.EMPTY;
-	}
-	
-	public GameTile(int x, int y, GameTiles tile) {
-		this.x = x;
-		this.y = y;
-		this.tile = tile;
-	}
 
 }

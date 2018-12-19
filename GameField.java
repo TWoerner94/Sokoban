@@ -2,13 +2,16 @@ package sokoban;
 
 import java.util.ArrayList;
 
-import sokoban.GameTile.GameTiles;
+import sokoban.GameTile.TilesEnum;
+
 
 public class GameField {
 	//zweidimensionale Liste zum speichern des Levels
 	private ArrayList<ArrayList<GameTile>> level;
 	//Levelbreite
 	private int levelWidth;
+	private boolean playerSet = false;
+	
 	
 	public GameField(String levelString, int levelWidth) {
 		createLevel(levelString, levelWidth);
@@ -18,8 +21,9 @@ public class GameField {
 		level = new ArrayList<>();
 		this.levelWidth = levelWidth;
 		int y = -1, x = 0;
+		TilesEnum currentTile;
 		
-		for(int i=0; x <= levelString.length()-1; i++) {
+		for(int i=0; i <= levelString.length()-1; i++) {
 			//Wenn noch keine zeile (y) besteht oder levelbreite erreicht wurde
 			//--> erzeuge neue Spalte
 			if(i % levelWidth == 0 || i == 0) {
@@ -27,7 +31,16 @@ public class GameField {
 				x = 0;
 				level.add( new ArrayList<GameTile>());
 			}
-			level.get(y).add(new GameTile(x, y, GameTile.getTileObject("" + levelString.charAt(i))));
+			
+			//aktuelles Feld auslesen
+			currentTile = TilesEnum.getTile(levelString.charAt(i));
+			//wenn spieler und spieler noch nicht gesetzt
+			if( !playerSet && currentTile == TilesEnum.PLAYER ) {
+				level.get(y).add(new Player(x, y));
+			}else {
+				level.get(y).add(new GameTile(currentTile));
+				//level.get(y).add(new GameTile(x, y, currentTile));
+			}
 			x++;
 		}
 	}

@@ -7,6 +7,6 @@ public class Display {
 	}
 	
 	public void drawField() {
-		gf.toString();
+		System.out.println(gf.toString());
 	}
 }

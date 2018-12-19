@@ -4,14 +4,9 @@ public class GameMain {
 
 	public static void main(String[] args) {
 		World game;
-		String s = "#######"+
-				   "#     #"+
-				   "##    #"+
-				   "#     #"+
-				   "#     #"+
-				   "#######";
+		LevelReader reader = new LevelReader();
 		
-		game = new World(s, 7);
+		game = new World(reader.toString(), 10);
 		
 		game.draw();
 	}
